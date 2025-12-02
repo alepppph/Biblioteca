@@ -1,87 +1,61 @@
-package ifsuldeminas.pas.bcc.biblioteca.model.entities;
+package com.biblioteca.demo.model.entities;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
-import java.util.Set;
-
-//um livro pode possuir 0 ou mais exemplares, mas um exemplar ("parte") é referente a apenas um livro.
-//um livro tem uma categoria, e uma categoria pode ser referente a N livros - (1-N);
+import jakarta.validation.constraints.*;
 
 @Entity
+@Table(name = "livros")
 public class Livro {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "O título é obrigatório.")
+    @Size(min = 2, max = 150, message = "O título deve ter entre 2 e 150 caracteres.")
     private String titulo;
+
+    @NotBlank(message = "O autor é obrigatório.")
+    private String autor;
+
+    @NotBlank(message = "O ISBN é obrigatório.")
+    @Pattern(regexp = "\\d{13}", message = "O ISBN deve conter exatamente 13 números.")
     private String isbn;
-    private String editora;
-    private Date anoPublicacao;
-    private Integer qtdPaginas;
-    private String idioma;
-    @OneToMany(mappedBy = "exemplar")
-    Set<Exemplar> exemplares;
-    @ManyToMany
-    Set<Autor> autores;
 
-    //Getters dos Atributos de Livro
-    public Long getId() {
-        return id;
-    }
+    @NotNull(message = "O ano não pode ser nulo.")
+    @Min(value = 1500, message = "Ano inválido.")
+    @Max(value = 2100, message = "Ano inválido.")
+    private Integer ano;
 
-    public String getTitulo() {
-        return titulo;
-    }
+    @NotBlank(message = "A categoria é obrigatória.")
+    private String categoria;
 
-    public String getIsbn() {
-        return isbn;
-    }
+    public Livro() {}
 
-    public String getEditora() {
-        return editora;
-    }
-
-    public Date getAnoPublicacao() {
-        return anoPublicacao;
-    }
-
-    public Integer getQtdPaginas() {
-        return qtdPaginas;
-    }
-
-    public String getIdioma() {
-        return idioma;
-    }
-
-    public Set<Exemplar> getExemplares() {
-        return exemplares;
-    }
-
-    public Set<Autor> getAutores() {
-        return autores;
-    }
-    //Setters dos Atributos de Livro
-    public void setTitulo(String titulo) {
+    public Livro(String titulo, String autor, String isbn, Integer ano, String categoria) {
         this.titulo = titulo;
-    }
-
-    public void setIsbn(String isbn) {
+        this.autor = autor;
         this.isbn = isbn;
+        this.ano = ano;
+        this.categoria = categoria;
     }
 
-    public void setAnoPublicacao(Date anoPublicacao) {
-        this.anoPublicacao = anoPublicacao;
-    }
+    // Getters e Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setEditora(String editora) {
-        this.editora = editora;
-    }
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public void setQtdPaginas(Integer qtdPaginas) {
-        this.qtdPaginas = qtdPaginas;
-    }
+    public String getAutor() { return autor; }
+    public void setAutor(String autor) { this.autor = autor; }
 
-    public void setIdioma(String idioma) {
-        this.idioma = idioma;
-    }
+    public String getIsbn() { return isbn; }
+    public void setIsbn(String isbn) { this.isbn = isbn; }
+
+    public Integer getAno() { return ano; }
+    public void setAno(Integer ano) { this.ano = ano; }
+
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
 }
