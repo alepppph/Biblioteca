@@ -32,7 +32,48 @@ public class Usuario extends Pessoa {
     @OneToMany
     @JoinColumn(name = "reserva_id")
     Set<Reserva> reservas;
-    
     // Nota: Os relacionamentos com Emprestimo e Reserva serão adicionados pela Pessoa 2, 
     // mas a FK (Foreign Key) estará na classe Emprestimo e Reserva.
+
+    //Getters dos Atributos de Usuário.
+    public Long getId() {
+        return id;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public Set<Reserva> getReservas() {
+        return reservas;
+    }
+
+    //Setters dos Atributos de Usuário.
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setReservas(Set<Reserva> reservas) {
+        this.reservas = reservas;
+    }
 }
