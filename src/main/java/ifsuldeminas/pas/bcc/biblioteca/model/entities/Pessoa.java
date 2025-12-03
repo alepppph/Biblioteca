@@ -8,9 +8,7 @@ import jakarta.validation.constraints.NotNull;
 //import lombok.NoArgsConstructor;
 //import lombok.AllArgsConstructor;
 
-
 // Configura a herança para a classe Usuario, usando tabelas separadas para Pessoa e Usuario
-
 //@Getter
 //@Setter
 //@NoArgsConstructor
@@ -18,26 +16,92 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @DiscriminatorValue(value = "classe")
 public class Pessoa {
-    // Atributos baseados no diagrama [cite: 98-101]
+
+    // ----------------------------------------------------
+    // CORREÇÃO: ADICIONANDO O CAMPO DE CHAVE PRIMÁRIA (@Id)
+    // ----------------------------------------------------
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // Atributos baseados no diagrama
     @Column(nullable = false)
     @NotBlank
-    private String nome; // [cite: 98]
+    private String nome; //
 
     @Column(unique = true, nullable = false)
     @NotNull
-    private String cpf; // [cite: 99]
+    private String cpf; //
 
     @Column(unique = true)
     @NotBlank
-    private String email; // [cite: 100]
+    private String email; //
 
-    private String telefone; // [cite: 101]
+    private String telefone; //
 
     // Mapeamento do relacionamento com Endereco: 
-    // Pessoa "1" -- "0..1" Endereco: possui [cite: 117]
-    // MappedBy indica que a propriedade 'pessoa' na classe Endereco é quem gerencia o relacionamento.
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     private Endereco endereco;
+
     @OneToOne
     Reserva reserva;
+
+    // ----------------------------------------------------
+    // GETTERS & SETTERS
+    // ----------------------------------------------------
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Reserva getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
+    }
 }

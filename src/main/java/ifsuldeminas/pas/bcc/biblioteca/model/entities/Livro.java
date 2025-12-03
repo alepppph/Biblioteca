@@ -7,9 +7,9 @@ import java.util.Set;
 
 //um livro pode possuir 0 ou mais exemplares, mas um exemplar ("parte") é referente a apenas um livro.
 //um livro tem uma categoria, e uma categoria pode ser referente a N livros - (1-N);
-
 @Entity
 public class Livro {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -19,12 +19,15 @@ public class Livro {
     private Date anoPublicacao;
     private Integer qtdPaginas;
     private String idioma;
-    @OneToMany(mappedBy = "exemplar")
+
+
+    @OneToMany(mappedBy = "livro")
     Set<Exemplar> exemplares;
+
     @ManyToMany
     Set<Autor> autores;
 
-    //Getters dos Atributos de Livro
+    // Getters dos Atributos de Livro
     public Long getId() {
         return id;
     }
@@ -60,7 +63,12 @@ public class Livro {
     public Set<Autor> getAutores() {
         return autores;
     }
-    //Setters dos Atributos de Livro
+
+    // Setters dos Atributos de Livro
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -83,5 +91,13 @@ public class Livro {
 
     public void setIdioma(String idioma) {
         this.idioma = idioma;
+    }
+
+    public void setExemplares(Set<Exemplar> exemplares) {
+        this.exemplares = exemplares;
+    }
+
+    public void setAutores(Set<Autor> autores) {
+        this.autores = autores;
     }
 }
